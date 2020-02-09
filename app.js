@@ -53,7 +53,7 @@ app.get('/login/user/:username/password/:password', (req, res) => {
     
 });
 
-// TODO respective classes for the employees
+// TODO implement these
 
 // add user
 app.get('/createuser/user/:username/password/:password', (req, res) => {
