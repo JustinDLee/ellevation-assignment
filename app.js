@@ -56,11 +56,11 @@ app.get('/login/user/:username/password/:password', (req, res) => {
 // TODO implement these
 
 // add user
-app.get('/createuser/user/:username/password/:password', (req, res) => {
+app.post('/createuser/user/', (req, res) => {
 
 });
 // update user
-app.get('/updateuser/user/:userId', (req, res) => {
+app.put('/updateuser/user/:userId', (req, res) => {
 
 });
 // delete user
@@ -68,19 +68,19 @@ app.get('/deleteuser/user/:userId', (req, res) => {
 
 });
 // add admin
-app.get('/addadmin/user/:userId', (req, res) => {
+app.post('/addadmin/user/:userId', (req, res) => {
 
 });
 // remove admin
-app.get('/removeadmin/user/:userId', (req, res) => {
+app.delete('/removeadmin/user/:userId', (req, res) => {
 
 });
 
 // add hr
-app.get('/addhr/user/:userId', (req, res) => {
+app.post('/addhr/user/:userId', (req, res) => {
 
 });
-app.get('/removehr/user/:userId', (req, res) => {
+app.delete('/removehr/user/:userId', (req, res) => {
 
 });
 // edit employee information

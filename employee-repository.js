@@ -67,10 +67,6 @@ const authenticate = (username, password) => {
     });
 }
 
-const createEmployee = (userId, employeeId) => {
-
-};
-
 const getEmployeeInfo = (userId, employeeId) => {
     // determine whether we can view the user info or not first
     if (userCanViewInformation(userId, employeeId)) {
@@ -89,22 +85,17 @@ const deleteEmployee = (userId, employeeId) => {
 
 };
 
-// TODO add and remove admin?
-
 const addAdmin = (userId, employeeId) => {
 
 };
-
 
 const removeAdmin = (userId, employeeId) => {
 
 };
 
-
 const addHR = (userId, employeeId) => {
 
 };
-
 
 const removeHR = (userId, employeeId) => {
 
@@ -133,6 +124,35 @@ const userCanViewInformation = (userId, employeeId) => {
 
     const rowForEmployee = syncCon.query(EMPLOYEE_MANAGER_SQL, [employeeId, userId]);
     return rowForEmployee.length > 0;
+}
+
+/**
+ * Determines whether or not the given user can edit the given employee's informaton.
+ */
+const userCanEditInformation = (userId, employeeId) => {
+    // if we're an admin, we should allow for editing information
+    const adminRows = syncCon.query(IS_ADMIN_SQL, [userId]);
+    if (adminRows.length) {
+        return true;
+    }
+
+    // if the user manages the employee directly, we should allow for editing information
+    const managingEmployeeRow = syncCon.query(EMPLOYEE_MANAGER_SQL, [employeeId, userId]);
+    return managingEmployeeRow.length > 0;
+};
+
+/**
+ * Returns whether or not the user can manage permissions. This includes creating/deleting admins, HR people, 
+ * and employees. 
+ */
+const userCanEditPermissions = (userId) => {
+    // if the user is an admin, return true
+    const adminRows = syncCon.query(IS_ADMIN_SQL, [userId]);
+    if (adminRows.length) {
+        return true;
+    }
+
+    return false;
 }
 
 module.exports = {
