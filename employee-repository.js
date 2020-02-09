@@ -77,28 +77,52 @@ const getEmployeeInfo = (userId, employeeId) => {
     }
 };
 
-const updateEmployeeInfo = (userId, employeeId) => {
-
+const updateEmployeeInfo = (userId, employeeId, employee) => {
+    if (userCanEditInformation(userId, employeeId)) {
+        // update employee
+    } else {
+        return null;
+    }
 };
 
 const deleteEmployee = (userId, employeeId) => {
-
+    if (userCanEditPermissions(userId)) {
+        // delete employee
+    } else {
+        return null;
+    }
 };
 
 const addAdmin = (userId, employeeId) => {
-
+    if (userCanEditPermissions(userId)) {
+        // add admin
+    } else {
+        return null;
+    }
 };
 
 const removeAdmin = (userId, employeeId) => {
-
+    if (userCanEditPermissions(userId)) {
+        // remove admin
+    } else {
+        return null;
+    }
 };
 
 const addHR = (userId, employeeId) => {
-
+    if (userCanEditPermissions(userId)) {
+        // remove admin
+    } else {
+        return null;
+    }
 };
 
 const removeHR = (userId, employeeId) => {
-
+    if (userCanEditPermissions(userId)) {
+        // remove admin
+    } else {
+        return null;
+    }
 };
 
 // super slow, but can be made significantly faster by using indexing
