@@ -31,6 +31,22 @@ app.get('/allemployees/:employeeId', (req, res) => {
     // TODO fetch from the database
 });
 
+app.get('/employee/:employeeId', (req, res) => {
+    const reqUserId = req.session.userId;
+    const employeeId = req.params.employeeId;
+    if (!reqUserId) {
+        res.status(400);
+        res.send('Not logged in. Cannot view employee information.');
+    }
+    // determine if the user can view this employee's information or not
+    employeeRepository.getEmployeeInfo(reqUserId, employeeId).then((info) => {
+        console.log(info);
+        res.send(info);
+    }, error => {
+        console.log(error);
+        res.send(error);
+    })
+});
 // TODO do not set this as a get, and do not store the password in plaintext in the database
 app.get('/login/user/:username/password/:password', (req, res) => {
     const username = req.params.username;
