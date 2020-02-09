@@ -58,7 +58,7 @@ const authenticate = (username, password) => {
     return new Promise((resolve, reject) => {
         con.query(authenticationSql, [username, password], (error, results) => {
             if (error) throw error;
-            if (results) {
+            if (results.length) {
                 resolve(results[0].id);
             } else {
                 resolve(null);
@@ -70,7 +70,6 @@ const authenticate = (username, password) => {
 const getEmployeeInfo = (userId, employeeId) => {
     // determine whether we can view the user info or not first
     if (userCanViewInformation(userId, employeeId)) {
-        console
         return syncCon.query(GET_EMPLOYEE_INFO_SQL, [employeeId]);
     } else {
         return null;
