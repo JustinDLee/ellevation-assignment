@@ -5,6 +5,15 @@ const bodyParser = require('body-parser');
 const session = require('cookie-session');
 
 app.use(bodyParser.json());
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'any string',
+    proxy: true,
+    cookie: {
+        maxAge: 1800
+    }
+}));
 
 const employeeRepository = require('./employee-repository');
 
