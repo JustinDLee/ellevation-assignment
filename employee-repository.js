@@ -52,22 +52,6 @@ const closeConnection = () => {
 };
 
 /**
- * Returns the information for the given employee id.
- */
-
- /**
-  * Returns a json for all employees managed by the given employee.
-  */
-
-  /**
-   * Returns a json for all employees except for other HR employees. 
-   */
-
-   /**
-    * Returns all visible employee information given an employee id
-    */
-
-/**
  * Authenticates the given user with the credentials.
  */
 const authenticate = (username, password) => {
@@ -83,6 +67,10 @@ const authenticate = (username, password) => {
     });
 }
 
+const createEmployee = (userId, employeeId) => {
+
+};
+
 const getEmployeeInfo = (userId, employeeId) => {
     // determine whether we can view the user info or not first
     if (userCanViewInformation(userId, employeeId)) {
@@ -91,6 +79,35 @@ const getEmployeeInfo = (userId, employeeId) => {
     } else {
         return null;
     }
+};
+
+const updateEmployeeInfo = (userId, employeeId) => {
+
+};
+
+const deleteEmployee = (userId, employeeId) => {
+
+};
+
+// TODO add and remove admin?
+
+const addAdmin = (userId, employeeId) => {
+
+};
+
+
+const removeAdmin = (userId, employeeId) => {
+
+};
+
+
+const addHR = (userId, employeeId) => {
+
+};
+
+
+const removeHR = (userId, employeeId) => {
+
 };
 
 // super slow, but can be made significantly faster by using indexing
@@ -117,6 +134,7 @@ const userCanViewInformation = (userId, employeeId) => {
     const rowForEmployee = syncCon.query(EMPLOYEE_MANAGER_SQL, [employeeId, userId]);
     return rowForEmployee.length > 0;
 }
-   module.exports = {
-       openConnection, closeConnection, authenticate, getEmployeeInfo
-   };
+
+module.exports = {
+    openConnection, closeConnection, authenticate, getEmployeeInfo
+};

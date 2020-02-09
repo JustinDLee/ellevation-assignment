@@ -53,6 +53,8 @@ app.get('/login/user/:username/password/:password', (req, res) => {
     
 });
 
+// TODO respective classes for the employees
+
 // add user
 app.get('/createuser/user/:username/password/:password', (req, res) => {
 
@@ -73,10 +75,7 @@ app.get('/addadmin/user/:userId', (req, res) => {
 app.get('/removeadmin/user/:userId', (req, res) => {
 
 });
-// set manager
-app.get('/setmanager/user/:userId', (req, res) => {
 
-});
 // add hr
 app.get('/addhr/user/:userId', (req, res) => {
 
