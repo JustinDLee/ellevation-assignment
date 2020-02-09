@@ -36,3 +36,8 @@ INSERT INTO admin(id) VALUES
 INSERT INTO hr_employee VALUES 
 	(4),
 	(5);
+
+INSERT INTO salary_history (employee_id, amount, effective_date) VALUES 
+	(1, 10000000, '2020-02-02'),
+	(1, 100000, '2020-02-01'),
+	(1, 0, '2020-01-01')

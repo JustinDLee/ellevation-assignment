@@ -53,6 +53,21 @@ app.get('/login/user/:username/password/:password', (req, res) => {
     
 });
 
+app.get('/salaryhistory/employee/:employeeId', (req, res) => {
+    const reqUserId = req.session.userId;
+    const employeeId = req.params.employeeId;
+    if (!reqUserId) {
+        res.status(400);
+        res.send('Not logged in. Cannot view employee information.');
+    }
+    const salaryHistory = employeeRepository.getSalaryHistory(reqUserId, employeeId);
+    if (salaryHistory) {
+        res.send(salaryHistory);
+    } else {
+        res.send('Cannot fetch salary information for employee ' + employeeId);
+    }
+});
+
 // TODO implement these
 
 // add user

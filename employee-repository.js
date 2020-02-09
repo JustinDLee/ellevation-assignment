@@ -8,6 +8,7 @@ const IS_ADMIN_SQL = 'SELECT id FROM `admin` WHERE id = ?';
 const IS_HR_SQL = 'SELECT id FROM hr_employee WHERE id = ?';
 const EMPLOYEE_MANAGER_SQL = 'SELECT id FROM employee WHERE id = ? AND manager_id = ?';
 const GET_EMPLOYEE_INFO_SQL = 'SELECT * FROM employee WHERE id = ?';
+const GET_SALARY_HISTORY_SQL = 'SELECT * FROM salary_history WHERE employee_id = ?';
 
 // const authenticationSql = 'SHOW TABLES;';
 /**
@@ -91,6 +92,22 @@ const deleteEmployee = (userId, employeeId) => {
         return null;
     }
 };
+
+const getSalaryHistory = (userId, employeeId) => {
+    if (userCanViewInformation(userId, employeeId)) {
+        return syncCon.query(GET_SALARY_HISTORY_SQL, [employeeId]);
+    } else {
+        return null;
+    }
+}
+
+const addSalaryHistory = (userId, employeeId, salary) => {
+    if (userCanEditInformation(userId, employeeId)) {
+        // insert salary information
+    } else {
+        return null;
+    }
+}
 
 const addAdmin = (userId, employeeId) => {
     if (userCanEditPermissions(userId)) {
@@ -179,5 +196,5 @@ const userCanEditPermissions = (userId) => {
 }
 
 module.exports = {
-    openConnection, closeConnection, authenticate, getEmployeeInfo
+    openConnection, closeConnection, authenticate, getEmployeeInfo, getSalaryHistory
 };
