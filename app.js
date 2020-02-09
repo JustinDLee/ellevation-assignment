@@ -22,15 +22,6 @@ app.get('/', (req, res) => {
     res.send('Hello world!');
 });
 
-// for a given employee id, get the people who you can see
-app.get('/allemployees/:employeeId', (req, res) => {
-    // TODO set a cookie for the user
-    const employeeId = req.params['employeeId'];
-    console.log(employeeId);
-    res.send(employeeId);
-    // TODO fetch from the database
-});
-
 app.get('/employee/:employeeId', (req, res) => {
     const reqUserId = req.session.userId;
     const employeeId = req.params.employeeId;
@@ -39,13 +30,12 @@ app.get('/employee/:employeeId', (req, res) => {
         res.send('Not logged in. Cannot view employee information.');
     }
     // determine if the user can view this employee's information or not
-    employeeRepository.getEmployeeInfo(reqUserId, employeeId).then((info) => {
-        console.log(info);
-        res.send(info);
-    }, error => {
-        console.log(error);
-        res.send(error);
-    })
+    const employeeInfo = employeeRepository.getEmployeeInfo(reqUserId, employeeId);
+    if (employeeInfo) {
+        res.send(employeeInfo);
+    } else {
+        res.send('Cannot fetch employee information for employee ' + employeeId);
+    }
 });
 // TODO do not set this as a get, and do not store the password in plaintext in the database
 app.get('/login/user/:username/password/:password', (req, res) => {
@@ -62,6 +52,39 @@ app.get('/login/user/:username/password/:password', (req, res) => {
     });
     
 });
+
+// add user
+app.get('/createuser/user/:username/password/:password', (req, res) => {
+
+});
+// update user
+app.get('/updateuser/user/:userId', (req, res) => {
+
+});
+// delete user
+app.get('/deleteuser/user/:userId', (req, res) => {
+
+});
+// add admin
+app.get('/addadmin/user/:userId', (req, res) => {
+
+});
+// remove admin
+app.get('/removeadmin/user/:userId', (req, res) => {
+
+});
+// set manager
+app.get('/setmanager/user/:userId', (req, res) => {
+
+});
+// add hr
+app.get('/addhr/user/:userId', (req, res) => {
+
+});
+app.get('/removehr/user/:userId', (req, res) => {
+
+});
+// edit employee information
 app.listen(port, () => {
     console.log('server up');
     employeeRepository.openConnection('root', 'system32');

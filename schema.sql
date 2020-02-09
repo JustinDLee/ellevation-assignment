@@ -22,4 +22,14 @@ CREATE TABLE admin (id INT,
 	CONSTRAINT fk_admin FOREIGN KEY (id) REFERENCES employee(id));
 
 INSERT INTO employee (first_name, last_name, username, pw, position, salary, vacation_balance, annual_bonus, manager_id) VALUES
-	('Justin', 'Lee', 'justinlee', 'notsecure', 'Head Admin', 10000000, 365, 999999, 1);
+	('Justin', 'Lee', 'justinlee', 'notsecure', 'Head Admin', 10000000, 365, 999999, 1),
+    ('John', 'Smith', 'johnsmith', 'johnsmith', 'CEO', 300000, 30, 10000, 2),
+    ('Richard', 'Hendrinks', 'richardhendricks', 'password', 'Software Engineer', 100000, 20, 2000, 2),
+    ('Jared', 'Dunn', 'jareddunn', 'donald', 'Head of HR', 60000, 15, 0, 2),
+    ('Timmy', 'Turner', 'timmyturner', 'wandacosmo', 'HR Intern', 0, 0, 0, 4);
+
+INSERT INTO admin(id) VALUES
+	(1);
+INSERT INTO hr_employee VALUES 
+	(4),
+	(5);

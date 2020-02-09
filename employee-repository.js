@@ -6,6 +6,7 @@ let syncCon = null;
 const authenticationSql = 'SELECT id FROM employee WHERE username = ? && pw = ?';
 const IS_ADMIN_SQL = 'SELECT id FROM `admin` WHERE id = ?';
 const IS_HR_SQL = 'SELECT id FROM hr_employee WHERE id = ?';
+const EMPLOYEE_MANAGER_SQL = 'SELECT id FROM employee WHERE id = ? AND manager_id = ?';
 const GET_EMPLOYEE_INFO_SQL = 'SELECT * FROM employee WHERE id = ?';
 
 // const authenticationSql = 'SHOW TABLES;';
@@ -84,47 +85,37 @@ const authenticate = (username, password) => {
 
 const getEmployeeInfo = (userId, employeeId) => {
     // determine whether we can view the user info or not first
-    return new Promise((resolve, reject) => {
-        userCanViewInformation(userId, employeeId).then(canView => {
-            if (canView) {
-                // query the database again for the information
-                con.query(GET_EMPLOYEE_INFO_SQL, [employeeId], (err, results) => {
-                    if (results) {
-                        resolve(results);
-                    } else {
-                        reject('No rows found for employee id ' + employeeId);
-                    }
-                })
-            } else {
-                reject('User does not have access to this employee\'s information');
-            }
-        });
-    })
+    if (userCanViewInformation(userId, employeeId)) {
+        console
+        return syncCon.query(GET_EMPLOYEE_INFO_SQL, [employeeId]);
+    } else {
+        return null;
+    }
 };
 
 // super slow, but can be made significantly faster by using indexing
 const userCanViewInformation = (userId, employeeId) => {
     // query the database
-    // if userId === employeeId, return true
-    return new Promise((resolve) => {
-         // if the employee is an admin, return true
-         console.log('i am here!');
-         console.log(syncCon.query(GET_EMPLOYEE_INFO_SQL, [userId]));
+    // if userId == employeeId, return true
+    if (userId == employeeId) {
+        return true; // always able to view your own information
+    } 
 
-        if (userId === employeeId) {
-            resolve(true);
-        }
-    
-       
+    // if we are an admin, return true
+    const adminRows = syncCon.query(IS_ADMIN_SQL, [userId]);
+    if (adminRows.length) {
+        return true;
+    }
 
-        
-    
-        // if the employee is an hr person and the other person isn't an hr person
-        // con.query(IS_HR_SQL, [user_id], (err, results) => {
-            
-        // });
-        // otherwise, return whether or not the user id manages this guy
-    });
+    // if we are an hr user and the other person isn't, return true
+    const hrRowsForUser = syncCon.query(IS_HR_SQL, [userId]);
+    const hrRowsForEmployee = syncCon.query(IS_HR_SQL, [employeeId]);
+    if (hrRowsForUser.length && !hrRowsForEmployee.length) {
+        return true;
+    }
+
+    const rowForEmployee = syncCon.query(EMPLOYEE_MANAGER_SQL, [employeeId, userId]);
+    return rowForEmployee.length > 0;
 }
    module.exports = {
        openConnection, closeConnection, authenticate, getEmployeeInfo
