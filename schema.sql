@@ -11,7 +11,6 @@ CREATE TABLE employee (id INT AUTO_INCREMENT,
 	salary INT,
 	vacation_balance INT,
 	annual_bonus INT,
-	# manager
 	manager_id INT,
 	PRIMARY KEY(id));
 
